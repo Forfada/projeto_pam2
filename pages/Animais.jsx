@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
-import { Button, FAB} from 'react-native-paper';
 import AnimalCard from '../components/AnimalCard';
+import AddModal from '../components/AddModal';
 
 //esse array pode vir do backend (???)
 const animaisMock = [
@@ -16,23 +16,14 @@ export default function Animais() {
 
   return (
     <View style={{ flex: 1 }}>
+      <AddModal>
       <ScrollView style={{ flex: 1, padding: 16,  }} contentContainerStyle={{ paddingBottom: 30 }}>
         
         {animais.map((animal) => (
           <AnimalCard key={animal.id} animal={animal} />
         ))}
       </ScrollView>
-
-      <FAB
-        icon="plus"
-        label="Adicionar"
-        style={{
-          position: 'absolute',
-          right: 16,
-          bottom: 80,
-        }}
-        onPress={() => console.log('Futuro: abrir modal para adicionar')}
-      />
+      </AddModal>
     </View>
   );
 };
