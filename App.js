@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as SplashScreen from "expo-splash-screen";
+import {createDB} from "./validation/createDB";
 
 import Home from "./pages/Home";
 import Animais from "./pages/Animais";
@@ -23,6 +24,16 @@ export default function App() {
     const totalTime = 5000; // 5 segundos
     const stepTime = 100; // intervalo de atualização
     const increment = stepTime / totalTime; // quanto aumenta a cada tick
+    
+    async function initializeDB() {
+      try {
+        await createDB();
+      } catch (error) {
+        console.log(`Erro ao criar o banco de dados: ${error}`);
+      }
+    }
+    
+    initializeDB();
 
     const interval = setInterval(() => {
       value += increment;
