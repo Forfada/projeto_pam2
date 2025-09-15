@@ -2,10 +2,10 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { Card, Text, Button } from 'react-native-paper';
 
-export default function AnimalCard({ animal }) {
+export default function AnimalCard({ animal, onEdit, onDelete }) {
   return (
     <Card style={{ marginBottom: 16 }}>
-      <Card.Cover source={animal.img} />
+      <Card.Cover source={animal.img ? { uri: animal.img } : require('../assets/images/dog.jpg')} />
       <Card.Content>
         <Text variant="titleMedium">{animal.nome}</Text>
         <Text variant="bodyMedium">{animal.preco}</Text>
@@ -33,7 +33,7 @@ export default function AnimalCard({ animal }) {
           mode="outlined"
           icon="pencil"
           style={{ flex: 1 }}
-          onPress={() => console.log('Editar', animal.nome)}
+          onPress={() => onEdit(animal)}
         >
           Editar
         </Button>
@@ -42,7 +42,7 @@ export default function AnimalCard({ animal }) {
           mode="outlined"
           icon="delete"
           style={{ flex: 1 }}
-          onPress={() => console.log('Excluir', animal.nome)}
+          onPress={() => onDelete(animal.id)}
         >
           Excluir
         </Button>

@@ -1,15 +1,13 @@
 import * as React from 'react';
 import { TextInput } from 'react-native-paper';
 
-const Input = ({label}) => {
-  const [text, setText] = React.useState("");
-
+const Input = ({ label, value, onChangeText }) => {
   return (
     <TextInput
       label={label}
-      value={text}
+      value={value}
       mode='outlined'
-      onChangeText={text => setText(text)}
+      onChangeText={onChangeText}
     />
   );
 };
