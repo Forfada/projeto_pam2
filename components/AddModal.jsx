@@ -1,4 +1,3 @@
-// AddModal.js
 import * as React from "react";
 import {
   Modal,

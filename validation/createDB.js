@@ -1,4 +1,3 @@
-// db.js
 import * as SQLite from "expo-sqlite";
 
 let dbInstance = null;

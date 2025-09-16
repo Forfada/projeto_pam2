@@ -16,7 +16,7 @@ export default function AvisoIlicitoModal({ visible, onClose }) {
         <View style={styles.modalContainer}>
           <Text style={styles.title}>Atenção!</Text>
           <Text style={styles.message}>
-            Comprar animais é <Text style={{ fontWeight: 'bold', color: '#d32f2f' }}>ilícito</Text> no país.
+            Comprar ESSES animais é <Text style={{ fontWeight: 'bold', color: '#d32f2f' }}>ilícito</Text> no país, repense suas ações.
           </Text>
 
           <TouchableOpacity style={styles.button} onPress={onClose}>

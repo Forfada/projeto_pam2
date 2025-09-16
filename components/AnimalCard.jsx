@@ -59,7 +59,6 @@ export default function AnimalCard({ animal, onEdit, onDelete }) {
         </View>
       </Card>
 
-      {/* Modal de aviso */}
       <AvisoIlicitoModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
