@@ -8,7 +8,7 @@ export default function AnimalCard({ animal, onEdit, onDelete }) {
       <Card.Cover source={animal.img ? { uri: animal.img } : require('../assets/images/dog.jpg')} />
       <Card.Content>
         <Text variant="titleMedium">{animal.nome}</Text>
-        <Text variant="bodyMedium">{animal.preco}</Text>
+        <Text variant="bodyMedium">R$ {animal.preco},00</Text>
       </Card.Content>
 
       <View

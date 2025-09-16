@@ -5,7 +5,6 @@ import {
   Portal,
   Text,
   Button,
-  PaperProvider,
   FAB,
 } from "react-native-paper";
 import { View, Image } from "react-native";
@@ -13,13 +12,13 @@ import * as ImagePicker from "expo-image-picker";
 import Input from "./Input";
 import { insert, update } from "../validation/createDB";
 
-
 const AddModal = ({ editingAnimal, onCloseEdit, children, onSaved }) => {
   const [visible, setVisible] = React.useState(false);
   const [nome, setNome] = React.useState("");
   const [preco, setPreco] = React.useState("");
   const [img, setImg] = React.useState("");
 
+  // abre modal em modo edição
   React.useEffect(() => {
     if (editingAnimal) {
       setNome(editingAnimal.nome);
@@ -40,18 +39,15 @@ const AddModal = ({ editingAnimal, onCloseEdit, children, onSaved }) => {
 
   const hideModal = () => {
     setVisible(false);
-    if (!editingAnimal) {
-      setNome("");
-      setPreco("");
-      setImg("");
-    }
+    setNome("");
+    setPreco("");
+    setImg("");
     if (onCloseEdit) onCloseEdit();
   };
 
   const pickImage = async () => {
     try {
-      const permission =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (!permission.granted) {
         alert("Permissão para acessar a galeria é necessária!");
         return;
@@ -62,7 +58,7 @@ const AddModal = ({ editingAnimal, onCloseEdit, children, onSaved }) => {
         quality: 0.7,
       });
 
-      if (!result.canceled && result.assets && result.assets.length > 0) {
+      if (!result.canceled && result.assets?.length > 0) {
         setImg(result.assets[0].uri);
       }
     } catch (e) {
@@ -86,7 +82,10 @@ const AddModal = ({ editingAnimal, onCloseEdit, children, onSaved }) => {
         alert("Animal adicionado com sucesso!");
       }
 
-      if (onSaved) onSaved(); // callback opcional p/ recarregar lista
+      if (onSaved) {
+        await onSaved();
+      }
+
       hideModal();
     } catch (e) {
       console.error("Erro ao salvar:", e);
@@ -102,7 +101,7 @@ const AddModal = ({ editingAnimal, onCloseEdit, children, onSaved }) => {
   };
 
   return (
-    <PaperProvider>
+    <>
       <Portal>
         <Modal
           visible={visible}
@@ -153,6 +152,7 @@ const AddModal = ({ editingAnimal, onCloseEdit, children, onSaved }) => {
 
       {children}
 
+      {/* botão só aparece no modo adicionar */}
       {!editingAnimal && (
         <FAB
           icon="plus"
@@ -165,7 +165,7 @@ const AddModal = ({ editingAnimal, onCloseEdit, children, onSaved }) => {
           onPress={showModal}
         />
       )}
-    </PaperProvider>
+    </>
   );
 };
 

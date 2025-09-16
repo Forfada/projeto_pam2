@@ -2,8 +2,7 @@ import * as React from 'react';
 import { ScrollView, View, Button, Text, Alert } from 'react-native';
 import AnimalCard from '../components/AnimalCard';
 import AddModal from '../components/AddModal';
-import { select, insert, update, remove } from '../validation/createDB';
-
+import { select, remove } from '../validation/createDB';
 
 const PAGE_SIZE = 10;
 
@@ -24,20 +23,6 @@ export default function Animais() {
   React.useEffect(() => {
     fetchAnimais();
   }, []);
-
-  const handleAddOrEdit = async (animal) => {
-    try {
-      if (animal.id) {
-        await update(animal.id, animal.nome, animal.preco, animal.img);
-      } else {
-        await insert(animal.nome, animal.preco, animal.img);
-      }
-      fetchAnimais();
-    } catch (e) {
-      Alert.alert('Erro', `Não foi possível salvar o animal.\n${e.message || e}`);
-      console.log(e);
-    }
-  };
 
   const handleDelete = (id) => {
     Alert.alert(
@@ -65,11 +50,14 @@ export default function Animais() {
   return (
     <View style={{ flex: 1 }}>
       <AddModal
-        onSubmit={handleAddOrEdit}
         editingAnimal={editingAnimal}
         onCloseEdit={() => setEditingAnimal(null)}
+        onSaved={fetchAnimais}
       >
-        <ScrollView style={{ flex: 1, padding: 16 }} contentContainerStyle={{ paddingBottom: 30 }}>
+        <ScrollView
+          style={{ flex: 1, padding: 16 }}
+          contentContainerStyle={{ paddingBottom: 30 }}
+        >
           {animaisPagina.map((animal) => (
             <AnimalCard
               key={animal.id}
@@ -78,8 +66,15 @@ export default function Animais() {
               onDelete={handleDelete}
             />
           ))}
+
           {totalPages > 1 && (
-            <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 10 }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginVertical: 10,
+              }}
+            >
               <Button
                 title="Anterior"
                 onPress={() => setPage(page - 1)}
@@ -99,4 +94,4 @@ export default function Animais() {
       </AddModal>
     </View>
   );
-};
+}
